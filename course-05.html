@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>No.5 - 纯 CSS 制作绕中轴旋转的立方体</title>
+    <style>
+
+        .container {
+            margin: 20vh auto;
+            width:200px;
+            height:200px;
+            perspective: 400px;
+            perspective-origin: 100px 100px;
+        }
+        .cube {
+            width:200px;
+            height:200px;
+            transform-style: preserve-3d;
+
+            backface-visibility:hidden;
+            transition: 10s;
+        }
+        .side {
+            position: absolute;
+            width:200px;
+            height:200px;
+            opacity: 0.5;
+            background: lightblue;
+            border: 1px solid blue;
+        }
+        .side.front{
+            transform: translateZ(100px);
+        }
+        .side.left{
+            transform: translateX(-100px) rotateY(90deg);
+        }
+        .side.back{
+            transform: translateZ(-100px);
+        }
+        .side.right{
+            transform: translateX(100px) rotateY(90deg);
+        }
+        .side.top{
+            transform: translateY(-100px) rotateX(90deg);
+        }
+        .side.bottom {
+            transform: translateY(100px) rotateX(90deg);
+        }
+
+        .container:hover .cube{
+            animation: rotate 5s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotateY(-360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="cube">
+        <div class="side front">1</div>
+        <div class="side left">2</div>
+        <div class="side back">3</div>
+        <div class="side right">4</div>
+        <div class="side top">5</div>
+        <div class="side bottom">6</div>
+    </div>
+
+</div>
+</body>
+</html>
