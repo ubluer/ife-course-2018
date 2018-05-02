@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>No.5 - 纯 CSS 制作绕中轴旋转的立方体</title>
+    <style>
+
+        .container {
+            position: fixed;
+            top:0;
+            left:0;
+            width: 100vw;
+            height:100vh;
+            overflow: hidden;
+        }
+        .bg{
+            position: absolute;
+            top: 0;
+            left:0;
+            width: 100%;
+            height:100%;
+        }
+        .bg-img {
+            position: absolute;
+            top: 0;
+            left:0;
+            width: 100%;
+            height:100%;
+        }
+        .controller {
+            position: absolute;
+            bottom:30px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
+        .controller .img{
+            border: 2px solid black;
+            box-shadow: 5px 5px 5px black;
+            height:150px;
+            cursor: pointer;
+        }
+        .bg-img.move-from-left {
+            animation: move-from-left 0.5s ease-out;
+        }
+        @keyframes move-from-left {
+            0% {
+                left:-500px;
+            }
+            100% {
+                left:0;
+            }
+        }
+        .bg-img.move-from-bottom {
+            animation: move-from-bottom 0.5s ease-out;
+        }
+        @keyframes move-from-bottom {
+            0% {
+                top:350px
+            }
+            100% {
+                top:0;
+            }
+        }
+        .bg-img.scale-from-smaller {
+            animation: scale-from-smaller 1s ease-in;
+        }
+        @keyframes scale-from-smaller {
+            0%{
+                transform: scale(0.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .bg-img.scale-from-bigger {
+            animation: scale-from-bigger 1s ease-out;
+        }
+        @keyframes scale-from-bigger {
+            0% {
+                transform: scale(2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .bg-img.complex {
+            animation:complex 0.7s ease-in-out;
+        }
+        @keyframes complex {
+            0% {
+                transform: rotate(-360deg) scale(0.1);
+            }
+            100% {
+                transform: rotate(0) scale(1);
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="bg">
+       <img class="bg-img" src="static/06-01.jpg">
+       <img class="bg-img" src="static/06-01.jpg">
+    </div>
+    <div class="controller">
+        <img class="img" src="static/06-01.jpg" onclick="changeTo(this, 'move-from-left')">
+        <img class="img" src="static/06-02.jpg" onclick="changeTo(this, 'move-from-bottom')">
+        <img class="img" src="static/06-03.jpg" onclick="changeTo(this, 'scale-from-smaller')">
+        <img class="img" src="static/06-04.jpg" onclick="changeTo(this, 'scale-from-bigger')">
+        <img class="img" src="static/06-05.jpg" onclick="changeTo(this, 'complex')">
+    </div>
+
+</div>
+<script>
+    // 利用两个img标签交替显示，以节约内存
+    var changeTo = function(event, animation){
+        // 获取背景图标签
+        var bgImgs = document.getElementsByClassName("bg-img")
+        bgImgs[0].src = bgImgs[1].src
+        bgImgs[1].src = event.src
+        // 添加class以执行动画
+        bgImgs[1].className = 'bg-img '+animation
+    }
+</script>
+</body>
+</html>
