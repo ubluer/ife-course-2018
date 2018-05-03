@@ -160,7 +160,7 @@
 </body>
 <script src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/jquery/jquery-1.10.2.min_65682a2.js"></script>
 <script>
-    // See https://github.com/daneden/animate.css/issues/644
+    // animate.css 监听动画结束标记
     var animationEnd = (function(el) {
         var animations = {
             animation: 'animationend',
@@ -188,25 +188,31 @@
             })
             return checked>=2;
         };
-        var animateButton = function(){
-            $('.btn').addClass('animated pulse infinite')
-        }
 
+        // input 在focus时执行
         $('.form__input').focus(function(){
+            // label变小动画
             $(this).next().addClass('focus');
+            // 下划线出现
             $(this).siblings('.underline').removeClass('hidden');
         })
+        // input 在blur时
         $('.form__input').blur(function(){
-            $(this).removeClass('focus');
+            // 下划线回缩动画，通过使用animate.css的向左滑出实现，在左滑出动画之后恢复隐藏状态
             $(this).siblings('.underline').addClass('animated slideOutLeft').one(animationEnd,function(){
                 $(this).removeClass('animated slideOutLeft').addClass('hidden')
             });
             if (!$(this).val()) {
+                // 若没有输入值，label重置
                 $(this).next().removeClass('focus');
             }
+            // 检查input是否都有值
             if(check()){
                 // 播放动画
-                animateButton()
+                $('.btn').addClass('animated pulse infinite');
+            }else {
+                // 移除动画
+                $('.btn').removeClass('animated pulse infinite');
             }
         })
 
